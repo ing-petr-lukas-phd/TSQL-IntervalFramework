@@ -107,32 +107,27 @@ END;
 GO
 
 ------------------------------------------------------------
--- Test 11: Complex scenario with multiple operations
+-- Test 9: Complex scenario with multiple operations
 ------------------------------------------------------------
-PRINT 'Test 11: Complex scenario with multiple operations';
-DECLARE @c1 ifram.IntervalSet = [ifram].[Empty]();
-DECLARE @c2 ifram.IntervalSet = [ifram].[Empty]();
-DECLARE @c3 ifram.IntervalSet = [ifram].[Empty]();
+BEGIN
+    PRINT 'Test 9: Complex scenario with multiple operations';
+    DECLARE @s1 ifram.IntervalSet = [ifram].[Empty]();
+    DECLARE @s2 ifram.IntervalSet = [ifram].[Empty]();
+    DECLARE @s3 ifram.IntervalSet = [ifram].[Empty]();
 
--- Step 1: Create two disjoint sets
-SET @c1 = [ifram].[Add](@c1, '2025-01-01', '2025-01-10'); -- duration 9
-SET @c1 = [ifram].[Add](@c1, '2025-01-20', '2025-01-25'); -- duration +5 = 14
+    SET @s1 = [ifram].[Add](@s1, '2025-01-01', '2025-01-10');
+    SET @s1 = [ifram].[Add](@s1, '2025-01-20', '2025-01-25');
 
-SET @c2 = [ifram].[Add](@c2, '2025-01-05', '2025-01-15'); -- duration 10
-SET @c2 = [ifram].[Add](@c2, '2025-01-22', '2025-01-30'); -- duration +8 = 18
+    SET @s2 = [ifram].[Add](@s2, '2025-01-05', '2025-01-15');
+    SET @s2 = [ifram].[Add](@s2, '2025-01-22', '2025-01-30');
 
--- Step 2: Union them
-SET @c3 = [ifram].[Union](@c1, @c2);
-SELECT 'Union duration' AS TestName, [ifram].[Duration](@c3) AS Actual, 24.0 AS Expected;
--- Resulting intervals: (1–15 = 14) and (20–30 = 10) → total 24
+    SET @s3 = [ifram].[Union](@s1, @s2);
+    SELECT 'Union duration' AS TestName, [ifram].[Duration](@s3) AS Actual, 24.0 AS Expected;
 
--- Step 3: Intersect original sets
-DECLARE @cIntersect ifram.IntervalSet = [ifram].[Intersect](@c1, @c2);
-SELECT 'Intersection duration' AS TestName, [ifram].[Duration](@cIntersect) AS Actual, 8.0 AS Expected;
--- Overlaps: (5–10 = 5) and (22–25 = 3) → total 8
+    DECLARE @sIntersect ifram.IntervalSet = [ifram].[Intersect](@s1, @s2);
+    SELECT 'Intersection duration' AS TestName, [ifram].[Duration](@sIntersect) AS Actual, 8.0 AS Expected;
 
--- Step 4: Subtract c2 from c1
-DECLARE @cSubtract ifram.IntervalSet = [ifram].[Subtract](@c1, @c2);
-SELECT 'Subtract duration (c1 - c2)' AS TestName, [ifram].[Duration](@cSubtract) AS Actual, 6.0 AS Expected;
--- Remaining from c1: (1–5 = 4) and (20–22 = 2) → total 6
-
+    DECLARE @sSubtract ifram.IntervalSet = [ifram].[Subtract](@s1, @s2);
+    SELECT 'Subtract duration' AS TestName, [ifram].[Duration](@sSubtract) AS Actual, 6.0 AS Expected;
+END;
+GO

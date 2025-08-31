@@ -102,7 +102,7 @@ BEGIN
     SELECT 
         'Subtract 3–5 and 10–12 from 1–15' AS TestName,
         [ifram].[Duration]([ifram].[Subtract](@s1, @s2)) AS Actual,
-        11.0 AS Expected;  -- Remaining: (1–3=2) + (5–10=5) + (12–15=4)
+        11.0 AS Expected;
 END;
 GO
 
@@ -135,3 +135,4 @@ SELECT 'Intersection duration' AS TestName, [ifram].[Duration](@cIntersect) AS A
 DECLARE @cSubtract ifram.IntervalSet = [ifram].[Subtract](@c1, @c2);
 SELECT 'Subtract duration (c1 - c2)' AS TestName, [ifram].[Duration](@cSubtract) AS Actual, 6.0 AS Expected;
 -- Remaining from c1: (1–5 = 4) and (20–22 = 2) → total 6
+

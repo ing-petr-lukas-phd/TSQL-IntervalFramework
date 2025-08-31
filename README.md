@@ -25,12 +25,12 @@ Typical use cases include:
 ---
 
 ## 📂 Repository Structure
-/src -> SQL scripts to create types and functions
-/tests -> T-SQL unit tests
-README.md
-LICENSE
+- `/src` -> SQL scripts to create types and functions
+- `/tests` -> T-SQL unit tests
+- `README.md`
+- `LICENSE`
 
-## 🧩 Usage Examples
+## 🧩 Usage Example
 
 ```tsql
 DECLARE @s ifram.IntervalSet = ifram.[Empty]();
@@ -46,3 +46,5 @@ SET @s = ifram.[Subtract](@s, ifram.Interval('2025-02-01 11:30', '2025-02-01 12:
 
 PRINT 'Total duration: ' + CAST(ifram.[Duration](@s) * 24 AS VARCHAR) + ' hours';
 ```
+
+

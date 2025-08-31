@@ -25,4 +25,25 @@ Typical use cases include:
 ---
 
 ## 📂 Repository Structure
+/src -> SQL scripts to create types and functions
+/tests -> T-SQL unit tests
+README.md
+LICENSE
+
+## 🧩 Usage Examples
+
+BEGIN
+	DECLARE @s ifram.IntervalSet = ifram.[Empty]();
+
+	-- Add the employee's attendance interval.
+	SET @s = ifram.[Add](@s, '2025-02-01 05:55', '2025-02-01 14:10');
+
+	-- Intersect the interval with the work shift.
+	SET @s = ifram.[Intersect](@s, ifram.Interval('2025-02-01 06:00', '2025-02-01 14:00'));
+
+	-- Subtract the lunch break.
+	SET @s = ifram.[Subtract](@s, ifram.Interval('2025-02-01 11:30', '2025-02-01 12:00'));
+
+	PRINT 'Total duration: ' + CAST(ifram.[Duration](@s) * 24 AS VARCHAR) + ' hours';
+END;
 

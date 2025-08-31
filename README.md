@@ -1,7 +1,7 @@
 # T-SQL Interval Framework
 
 A reusable **T-SQL framework** for working with time intervals in Microsoft SQL Server.  
-It provides a set of user-defined functions to perform operations such as **union, intersection, and subtraction** on intervals.
+It provides a set of user-defined functions to perform operations such as **union**, **intersection**, and **subtraction** on intervals.
 
 Typical use cases include:
 - Planning and scheduling

@@ -13,7 +13,7 @@ Typical use cases include:
 
 ## 🚀 Features
 
-- Store intervals in a normalized way - intervals are stored in the minimal non-overlapping form.
+- Store intervals in a normalized way - intervals are stored in the minimal non-overlapping form
 - Perform set operations:
   - `Union`
   - `Intersect`
